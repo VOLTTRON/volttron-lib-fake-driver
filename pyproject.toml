@@ -1,0 +1,47 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "volttron-lib-fake"
+version = "0.1.0"
+description = "Fake Driver supported and maintained by the Volttron team."
+authors = ["Volttron <volttron@pnnl.gov>"]
+license = "Apache License 2.0"
+readme = "README.md"
+repository = "https://github.com/VOLTTRON/volttron-drivers"
+homepage = "https://github.com/VOLTTRON/volttron-drivers/volttron-lib-fake"
+keywords = []
+packages = [ { include = "volttron", from = "src" } ]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+
+[tool.poetry.dev-dependencies]
+volttron-lib-base-driver = {path = "../volttron-lib-base-driver", develop = true}
+volttron-testing = {path = "../volttron-testing", develop = true}
+pytest = "^6.2.5"
+mock = "^4.0.3"
+pre-commit = "^2.17.0"
+yapf = "^0.32.0"
+toml = "^0.10.2"
+isort = "^5.10.1"
+safety = "^1.10.3"
+mypy = "^0.942"
+coverage = "^6.3.2"
+Sphinx = "^4.5.0"
+sphinx-rtd-theme = "^1.0.0"
+
+[tool.yapf]
+based_on_style = "pep8"
+spaces_before_comment = 4
+column_limit = 99
+split_before_logical_operator = true
+
+[tool.yapfignore]
+ignore_patterns = [
+    ".venv/**",
+    ".pytest_cache/**",
+    "dist/**",
+    "docs/**"
+]
