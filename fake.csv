@@ -1,6 +1,6 @@
 Point Name,Volttron Point Name,Units,Units Details,Writable,Starting Value,Type,Notes
+EKG,EKG,waveform,waveform,TRUE,sin,float,Sine wave for baseline output
 Heartbeat,Heartbeat,On/Off,On/Off,TRUE,0,boolean,Point for heartbeat toggle
-EKG,EKG,waveform,waveform,TRUE,1,float,Sine wave for baseline output
 OutsideAirTemperature1,OutsideAirTemperature1,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
 SampleWritableFloat1,SampleWritableFloat1,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
 SampleLong1,SampleLong1,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
@@ -21,5 +21,5 @@ SampleBool3,SampleBool3,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of 
 SampleWritableBool3,SampleWritableBool3,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
 HPWH_Phy0_PowerState,PowerState,1/0,1/0,TRUE,0,int,Power on off status
 ERWH_Phy0_ValveState,ValveState,1/0,1/0,TRUE,0,int,power on off status
-EKG_Sin,EKG_Sin,1-0,SIN Wave,TRUE,0,float,SIN wave
-EKG_Cos,EKG_Cos,1-0,COS Wave,TRUE,0,float,COS wave
+EKG_Sin,EKG_Sin,1-0,SIN Wave,TRUE,sin,float,SIN wave
+EKG_Cos,EKG_Cos,1-0,COS Wave,TRUE,sin,float,COS wave

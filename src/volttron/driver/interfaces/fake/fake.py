@@ -100,10 +100,10 @@ class EKGregister(BaseRegister):
         self._value = x
 
 
-class Interface(BasicRevert, BaseInterface):
+class Fake(BasicRevert, BaseInterface):
 
     def __init__(self, **kwargs):
-        super(Interface, self).__init__(**kwargs)
+        super(Fake, self).__init__(**kwargs)
 
     def configure(self, config_dict, registry_config_str):
         self.parse_config(registry_config_str)
