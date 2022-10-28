@@ -12,8 +12,8 @@ description = "Fake Driver supported and maintained by the Volttron team."
 authors = ["Mark Bonicillo <volttron@pnnl.gov>"]
 license = "Apache License 2.0"
 readme = "README.md"
-repository = "https://github.com/VOLTTRON/volttron-lib-fake-driver"
-homepage = "https://github.com/VOLTTRON/volttron-lib-fake-driver"
+repository = "https://github.com/eclipse-volttron/volttron-lib-fake-driver"
+homepage = "https://github.com/eclipse-volttron/volttron-lib-fake-driver"
 keywords = []
 packages = [ { include = "volttron", from = "src" } ]
 classifiers = [

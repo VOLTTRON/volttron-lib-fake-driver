@@ -1,8 +1,6 @@
 # volttron-lib-fake-driver
 
-
 ![Passing?](https://github.com/VOLTTRON/volttron-lib-fake-driver/actions/workflows/run_tests.yml/badge.svg)
-[![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://VOLTTRON.github.io/volttron-lib-fake-driver/)
 [![pypi version](https://img.shields.io/pypi/v/volttron-lib-fake-driver.svg)](https://pypi.org/project/volttron-lib-fake-driver/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -11,7 +9,7 @@ This project contains Drivers supported and maintained by the Volttron team.
 # Prerequisites
 
 * Python 3.8
-* Poetry 1.2
+* Poetry 1.2.2
 
 ## Python
 
