@@ -1,6 +1,6 @@
 # volttron-lib-fake-driver
 
-![Passing?](https://github.com/VOLTTRON/volttron-lib-fake-driver/actions/workflows/run_tests.yml/badge.svg)
+![Passing?](https://github.com/VOLTTRON/volttron-lib-fake-driver/actions/workflows/run-tests.yml/badge.svg)
 [![pypi version](https://img.shields.io/pypi/v/volttron-lib-fake-driver.svg)](https://pypi.org/project/volttron-lib-fake-driver/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -44,10 +44,10 @@ follow these [instructions](https://python-poetry.org/docs/master/#installation)
 With `pip`:
 
 ```shell
-python3.8 -m pip install volttron-lib-fake-driver
+python -m pip install volttron-lib-fake-driver
 
 # Develop mode
-python3.8 -m pip install --editable volttron-lib-fake-driver
+python -m pip install --editable volttron-lib-fake-driver
 ```
 
 # Development
