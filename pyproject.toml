@@ -30,7 +30,7 @@ python = ">=3.8,<4.0"
 volttron-lib-base-driver = "^0.1.1a0"
 
 [tool.poetry.group.dev.dependencies]
-volttron-testing = "^0.3.1a7"
+volttron-testing = "^0.3.1a9"
 pytest = "^6.2.5"
 pytest-cov = "^3.0.0"
 mock = "^4.0.3"
