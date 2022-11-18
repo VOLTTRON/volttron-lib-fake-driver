@@ -2,14 +2,12 @@
 
 ![Passing?](https://github.com/VOLTTRON/volttron-lib-fake-driver/actions/workflows/run-tests.yml/badge.svg)
 [![pypi version](https://img.shields.io/pypi/v/volttron-lib-fake-driver.svg)](https://pypi.org/project/volttron-lib-fake-driver/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 This project contains Drivers supported and maintained by the Volttron team.
 
 # Prerequisites
 
 * Python 3.8
-* Poetry 1.2.2
 
 ## Python
 
@@ -33,54 +31,47 @@ pyenv global system 3.8.10
 ```
 </details>
 
-
-## Poetry
-
-This project uses `poetry` to install and manage dependencies. To install poetry,
-follow these [instructions](https://python-poetry.org/docs/master/#installation).
-
 # Installation
 
-With `pip`:
+Create and activate a virtual environment.
 
 ```shell
-python -m pip install volttron-lib-fake-driver
+python -m venv env
+source env/bin/activate
+```
 
-# Develop mode
-python -m pip install --editable volttron-lib-fake-driver
+Install volttron and start the platform.
+
+```shell
+pip install volttron
+
+# Start platform with output going to volttron.log
+volttron -vv -l volttron.log &
+```
+
+Install the library. You have two options. You can install this library using the version on PyPi:
+
+```shell
+pip install volttron-lib-fake-driver
+```
+
+Or you can install the local version of this library from this repo:
+
+```shell
+pip install -e .
 ```
 
 # Development
 
-## Environment
+See [Developing on Modular Volttron](https://github.com/eclipse-volttron/volttron-core/blob/develop/DEVELOPING_ON_MODULAR.md).
 
-Set the environment to be in your project directory:
-
-```poetry config virtualenvs.in-project true```
-
-If you want to install all your dependencies, including dependencies to help with developing your agent, run this command:
-
-```poetry install```
-
-If you want to install only the dependencies needed to run your agent, run this command:
-
-```poetry install --no-dev```
-
-Activate the virtual environment:
-
-```shell
-# using Poetry
-poetry shell
-
-# using 'source' command
-source "$(poetry env info --path)/bin/activate"
-```
-
-## Source Control
+# Git Setup
 
 1. To use git to manage version control, create a new git repository in your local agent project.
 
-```git init```
+```
+git init
+```
 
 2. Then create a new repo in your Github or Gitlab account. Copy the URL that points to that new repo in
 your Github or Gitlab account. This will be known as our 'remote'.
@@ -91,10 +82,9 @@ your Github or Gitlab account. This will be known as our 'remote'.
 
 When you push to your repo, note that the default branch is called 'main'.
 
+# Optional Configurations
 
-## Optional Configurations
-
-### Precommit
+## Precommit
 
 Note: Ensure that you have created the virtual environment using Poetry
 
@@ -112,16 +102,6 @@ is an example:
 
 ```git commit -m "Some message" --no-verify```
 
-
-# Publishing to PyPi
-
-Publishing your Driver module to PyPi is automated through the continuous integration workflow provided in `~/.github/workflows/publish_to_pypi.yml`.
-You can update that Github Workflow with your credentials to ensure that publishing to PyPi will succeed. The default behavior of
-that workflow is to publish to PyPi when a release has been published. If you want to change this behavior, you can modify the
-workflow to publish to PyPi based on whatever desired event; see [Github Workflows docs](https://docs.github.com/en/actions/using-workflows/triggering-a-workflow)
-on how to change the events that trigger a workflow.
-
-
 # Documentation
 
 To build the docs, navigate to the 'docs' directory and build the documentation:
@@ -134,10 +114,28 @@ make html
 After the documentation is built, view the documentation in html form in your browser.
 The html files will be located in `~<path to project directory>/docs/build/html`.
 
-**PROTIP: To open the landing page of your documentation directly from the command line, run the following command:**
+ℹ️ **PROTIP: To open the landing page of your documentation directly from the command line, run the following command:**
 
 ```shell
 open <path to project directory>/docs/build/html/index.html
 ```
 
 This will open the documentation landing page in your default browsert (e.g. Chrome, Firefox).
+
+# Disclaimer Notice
+
+This material was prepared as an account of work sponsored by an agency of the
+United States Government.  Neither the United States Government nor the United
+States Department of Energy, nor Battelle, nor any of their employees, nor any
+jurisdiction or organization that has cooperated in the development of these
+materials, makes any warranty, express or implied, or assumes any legal
+liability or responsibility for the accuracy, completeness, or usefulness or any
+information, apparatus, product, software, or process disclosed, or represents
+that its use would not infringe privately owned rights.
+
+Reference herein to any specific commercial product, process, or service by
+trade name, trademark, manufacturer, or otherwise does not necessarily
+constitute or imply its endorsement, recommendation, or favoring by the United
+States Government or any agency thereof, or Battelle Memorial Institute. The
+views and opinions of authors expressed herein do not necessarily state or
+reflect those of the United States Government or any agency thereof.
