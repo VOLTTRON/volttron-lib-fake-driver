@@ -3,7 +3,7 @@
 ![Passing?](https://github.com/VOLTTRON/volttron-lib-fake-driver/actions/workflows/run-tests.yml/badge.svg)
 [![pypi version](https://img.shields.io/pypi/v/volttron-lib-fake-driver.svg)](https://pypi.org/project/volttron-lib-fake-driver/)
 
-This project contains Drivers supported and maintained by the Volttron team.
+The FakeDriver is a way to quickly see data published to the message bus in a format that mimics what a true Driver would produce. This is an extremely simple implementation of the [VOLTTRON driver framework](https://volttron.readthedocs.io/en/develop/agent-framework/driver-framework/drivers-overview.html#driver-framework). This driver does not connect to any actual device and instead produces random and or pre-configured values.
 
 # Prerequisites
 
@@ -33,14 +33,14 @@ pyenv global system 3.8.10
 
 # Installation
 
-Create and activate a virtual environment.
+1. Create and activate a virtual environment.
 
 ```shell
 python -m venv env
 source env/bin/activate
 ```
 
-Install volttron and start the platform.
+2. Install volttron and start the platform.
 
 ```shell
 pip install volttron
@@ -49,7 +49,15 @@ pip install volttron
 volttron -vv -l volttron.log &
 ```
 
-Install the library. You have two options. You can install this library using the version on PyPi:
+3. Install the volttron platform driver:
+
+```shell
+vctl install volttron-platform-driver --start
+```
+
+4. Install the volttron fake driver library.
+
+ You have two options. You can install this library using the version on PyPi:
 
 ```shell
 pip install volttron-lib-fake-driver
@@ -59,6 +67,85 @@ Or you can install the local version of this library from this repo:
 
 ```shell
 pip install -e .
+```
+
+5. Install a Fake Driver onto the Platform Driver.
+
+Installing a Fake driver in the Platform Driver Agent requires adding copies of the device configuration and registry configuration files to the Platform Driver’s configuration store
+
+Create a config directory:
+
+```shell
+mkdir config
+```
+
+
+Navigate to the config directory and create a file called `fake.config` and add the following JSON to it:
+
+```json
+{
+    "driver_config": {},
+    "registry_config": "config://fake.csv",
+    "interval": 5,
+    "timezone": "US/Pacific",
+    "heart_beat_point": "Heartbeat",
+    "driver_type": "fakedriver",
+    "publish_breadth_first_all": false,
+    "publish_depth_first": false,
+    "publish_breadth_first": false
+    }
+```
+
+Create another file called `fake.csv` and add the following contents to it:
+
+```csv
+Point Name,Volttron Point Name,Units,Units Details,Writable,Starting Value,Type,Notes
+EKG,EKG,waveform,waveform,TRUE,sin,float,Sine wave for baseline output
+Heartbeat,Heartbeat,On/Off,On/Off,TRUE,0,boolean,Point for heartbeat toggle
+OutsideAirTemperature1,OutsideAirTemperature1,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
+SampleWritableFloat1,SampleWritableFloat1,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
+SampleLong1,SampleLong1,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
+SampleWritableShort1,SampleWritableShort1,%,0.00 to 100.00 (20 default),TRUE,20,int,Minimum damper position during the standard mode
+SampleBool1,SampleBool1,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of cooling stage 1
+SampleWritableBool1,SampleWritableBool1,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
+OutsideAirTemperature2,OutsideAirTemperature2,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
+SampleWritableFloat2,SampleWritableFloat2,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
+SampleLong2,SampleLong2,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
+SampleWritableShort2,SampleWritableShort2,%,0.00 to 100.00 (20 default),TRUE,20,int,Minimum damper position during the standard mode
+SampleBool2,SampleBool2,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of cooling stage 1
+SampleWritableBool2,SampleWritableBool2,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
+OutsideAirTemperature3,OutsideAirTemperature3,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
+SampleWritableFloat3,SampleWritableFloat3,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
+SampleLong3,SampleLong3,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
+SampleWritableShort3,SampleWritableShort3,%,0.00 to 100.00 (20 default),TRUE,20,int,Minimum damper position during the standard mode
+SampleBool3,SampleBool3,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of cooling stage 1
+SampleWritableBool3,SampleWritableBool3,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
+HPWH_Phy0_PowerState,PowerState,1/0,1/0,TRUE,0,int,Power on off status
+ERWH_Phy0_ValveState,ValveState,1/0,1/0,TRUE,0,int,power on off status
+EKG_Sin,EKG_Sin,1-0,SIN Wave,TRUE,sin,float,SIN wave
+EKG_Cos,EKG_Cos,1-0,COS Wave,TRUE,sin,float,COS wave
+```
+
+Add fake.csv and fake.config to the configuration store:
+
+```
+vctl config store platform.driver devices/campus/building/fake config/fake.config
+vctl config store platform.driver fake.csv config/fake.csv --csv
+```
+
+6. Observe Data
+
+To see data being published to the bus, install a [Listener Agent](https://pypi.org/project/volttron-listener/):
+
+```
+vctl install volttron-listener --start
+```
+
+Once installed, you should see the data being published by viewing the Volttron logs file that was created in step 2.
+To watch the logs, open a separate terminal and run the following command:
+
+```
+tail -f <path to folder containing volttron.log>/volttron.log
 ```
 
 # Development
