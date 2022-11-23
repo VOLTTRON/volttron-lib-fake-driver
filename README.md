@@ -52,7 +52,7 @@ volttron -vv -l volttron.log &
 3. Install the volttron platform driver:
 
 ```shell
-vctl install volttron-platform-driver --start
+vctl install volttron-platform-driver --vip-identity platform.driver --start
 ```
 
 4. Install the volttron fake driver library.
@@ -63,22 +63,16 @@ vctl install volttron-platform-driver --start
 pip install volttron-lib-fake-driver
 ```
 
-Or you can install the local version of this library from this repo:
-
-```shell
-pip install -e .
-```
-
 5. Install a Fake Driver onto the Platform Driver.
 
 Installing a Fake driver in the Platform Driver Agent requires adding copies of the device configuration and registry configuration files to the Platform Driver’s configuration store
 
-Create a config directory:
+Create a config directory and navigate to it:
 
 ```shell
 mkdir config
+cd config
 ```
-
 
 Navigate to the config directory and create a file called `fake.config` and add the following JSON to it:
 
@@ -89,7 +83,7 @@ Navigate to the config directory and create a file called `fake.config` and add 
     "interval": 5,
     "timezone": "US/Pacific",
     "heart_beat_point": "Heartbeat",
-    "driver_type": "fakedriver",
+    "driver_type": "fake",
     "publish_breadth_first_all": false,
     "publish_depth_first": false,
     "publish_breadth_first": false
@@ -129,8 +123,8 @@ EKG_Cos,EKG_Cos,1-0,COS Wave,TRUE,sin,float,COS wave
 Add fake.csv and fake.config to the configuration store:
 
 ```
-vctl config store platform.driver devices/campus/building/fake config/fake.config
-vctl config store platform.driver fake.csv config/fake.csv --csv
+vctl config store platform.driver devices/campus/building/fake fake.config
+vctl config store platform.driver fake.csv fake.csv --csv
 ```
 
 6. Observe Data
