@@ -7,9 +7,9 @@ profile = "black"
 
 [tool.poetry]
 name = "volttron-lib-fake-driver"
-version = "0.1.0"
-description = "Fake Driver supported and maintained by the Volttron team."
-authors = ["Mark Bonicillo <volttron@pnnl.gov>"]
+version = "0.2.0-rc"
+description = "A minimal implementation of a driver for the VOLTTRON platform."
+authors = ["VOLTTRON Team <volttron@pnnl.gov>"]
 license = "Apache License 2.0"
 readme = "README.md"
 repository = "https://github.com/eclipse-volttron/volttron-lib-fake-driver"
