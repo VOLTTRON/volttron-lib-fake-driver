@@ -28,7 +28,7 @@ Here is an example device configuration file:
     {
         "driver_type": "fake",
         "driver_config": {},
-        "registry_config":"config://fake.csv",
+        "registry_config":"config://registry_configs/fake.csv",
         "interval": 5,
         "timezone": "US/Pacific",
         "heart_beat_point": "Heartbeat",
@@ -37,7 +37,7 @@ Here is an example device configuration file:
         "publish_breadth_first": false
     }
 
-A sample fake device configuration file can be found in the volttron-lib-fake-driver repository as
+This sample fake device configuration file can also be found in the volttron-lib-fake-driver repository as
 `fake.config <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.config>`_
 
 Fake Device Registry Configuration File
@@ -114,8 +114,8 @@ configuration and registry configuration files to the Platform Driver's :ref:`co
 
 .. code-block:: bash
 
-    vctl config store platform.driver devices/campus/building/fake myconfig/fake.config
-    vctl config store platform.driver fake.csv myconfig/fake.csv --csv
+    vctl config store platform.driver devices/campus/building/fake1 myconfig/fake.config
+    vctl config store platform.driver registry_configs/fake.csv myconfig/fake.csv --csv
 
 - Use the scripts/install-agent.py script to install the Platform Driver agent:
 
