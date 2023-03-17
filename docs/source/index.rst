@@ -26,16 +26,19 @@ Here is an example device configuration file:
 .. code-block:: json
 
     {
+        "driver_type": "fake",
         "driver_config": {},
-        "driver_type": "bacnet",
-        "registry_config":"config://registry_configs/vav.csv",
+        "registry_config":"config://fake.csv",
         "interval": 5,
-        "timezone": "UTC",
-        "heart_beat_point": "heartbeat"
+        "timezone": "US/Pacific",
+        "heart_beat_point": "Heartbeat",
+        "publish_breadth_first_all": false,
+        "publish_depth_first": false,
+        "publish_breadth_first": false
     }
 
-A sample fake device configuration file can be found in the VOLTTRON repository in
-`examples/configurations/drivers/fake.config`
+A sample fake device configuration file can be found in the volttron-lib-fake-driver repository as
+:ref:`fake.config <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.config>`
 
 Fake Device Registry Configuration File
 ---------------------------------------
@@ -46,13 +49,13 @@ configures a point on the device.
 The following columns are required for each row:
 
     - **Volttron Point Name** - The name by which the platform and agents running on the platform will refer to this
-      point.  For instance, if the `Volttron Point Name` is `HeatCall1` (and using the example device configuration
-      above) then an agent would use `pnnl/isb2/hvac1/HeatCall1` to refer to the point when using the RPC interface of
-      the actuator agent.
+      point.  For instance, if the `Volttron Point Name` is `HeatCall1` and the device configuration is stored as
+      `devices/pnnl/isb2/hvac1`, then an agent would use `pnnl/isb2/hvac1/HeatCall1` to refer to the point when using
+      the RPC interface of the driver or actuator agents.
     - **Units** - Used for meta data when creating point information on the historian.
     - **Writable** - Either `TRUE` or `FALSE`. Determines if the point can be written to.  Only points labeled `TRUE`
-      can be written to through the ActuatorAgent.  Points labeled `TRUE` incorrectly will cause an error to be returned
-      when an agent attempts to write to the point.
+      can be written.  Writing to points labeled `FALSE` will cause an error to be returned when an agent attempts to
+      write to the point.
 
 
 The following columns are optional:
@@ -83,8 +86,8 @@ about a point.  Please note that there is nothing in the driver that will enforc
         SampleWritableBool1,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
 
 A sample fake registry configuration file can be found
-`here <https://raw.githubusercontent.com/VOLTTRON/volttron/c57569bd9e71eb32afefe8687201d674651913ed/examples/configurations/drivers/fake.csv>`_
-or in the VOLTTRON repository in ``examples/configurations/drivers/fake.csv``
+`here <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.csv>`_
+or in the volttron-lib-fake-driver repository as `fake.csv`.
 
 
 .. _Fake-Driver-Install:
@@ -95,63 +98,31 @@ Installation
 Installing a Fake driver in the :ref:`Platform Driver Agent <Platform-Driver>` requires adding copies of the device
 configuration and registry configuration files to the Platform Driver's :ref:`configuration store <Configuration-Store>`
 
-- Create a config directory (if one doesn't already exist) inside your Volttron repository:
+- Create a local directory for editing config files (if one doesn't already exist):
 
 .. code-block:: bash
 
-    mkdir config
+    mkdir myconfig
 
-All local config files will be worked on here.
+- Save copies, in myconfig, of the example
+  :ref:`device config file <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.config>`
+  and `registry file <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.csv>`
+  from the volttron-lib-fake-driver repository.
 
-- Copy over the example config file and registry config file from the VOLTTRON repository:
-
-.. code-block:: bash
-
-    cp examples/configurations/drivers/fake.config config/
-    cp examples/configurations/drivers/fake.csv config/
-
-- Edit the driver config `fake.config` for the paths on your system:
-
-.. code-block:: json
-
-    {
-        "driver_config": {},
-        "registry_config": "config://fake.csv",
-        "interval": 5,
-        "timezone": "US/Pacific",
-        "heart_beat_point": "Heartbeat",
-        "driver_type": "fakedriver",
-        "publish_breadth_first_all": false,
-        "publish_depth_first": false,
-        "publish_breadth_first": false
-   	}
-
-- Create a copy of the Platform Driver config from the VOLTTRON repository:
-
-.. code-block:: bash
-
-    cp examples/configurations/drivers/platform-driver.agent config/fake-platform-driver.config
+- Edit the fake.config and fake.csv files, if desired.
 
 - Add fake.csv and fake.config to the :ref:`configuration store <Configuration-Store>`:
 
 .. code-block:: bash
 
-    vctl config store platform.driver devices/campus/building/fake config/fake.config
-    vctl config store platform.driver fake.csv config/fake.csv --csv
-
-- Edit `fake-platform-driver.config` to reflect paths on your system
-
-.. code-block:: json
-
-    {
-        "driver_scrape_interval": 0.05
-    }
+    vctl config store platform.driver devices/campus/building/fake myconfig/fake.config
+    vctl config store platform.driver fake.csv myconfig/fake.csv --csv
 
 - Use the scripts/install-agent.py script to install the Platform Driver agent:
 
 .. code-block:: bash
 
-    python scripts/install-agent.py -s services/core/PlatformDriverAgent -c config/fake-platform-driver.config
+    python scripts/install-agent.py -s services/core/PlatformDriverAgent -i platform.driver -t driver
 
 - If you have a :ref:`Listener Agent<Listener-Agent>` already installed, you should start seeing data being published to
   the bus.
