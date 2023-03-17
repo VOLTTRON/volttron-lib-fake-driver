@@ -106,7 +106,7 @@ configuration and registry configuration files to the Platform Driver's :ref:`co
 
 - Save copies, in myconfig, of the example
   :ref:`device config file <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.config>`
-  and :ref:`registry file <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.csv>`
+  and `registry file <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.csv>`
   from the volttron-lib-fake-driver repository.
 
 - Edit the fake.config and fake.csv files, if desired.
