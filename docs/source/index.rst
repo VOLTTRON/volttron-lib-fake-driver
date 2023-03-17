@@ -38,7 +38,7 @@ Here is an example device configuration file:
     }
 
 A sample fake device configuration file can be found in the volttron-lib-fake-driver repository as
-:ref:`fake.config <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.config>`
+`fake.config <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.config>`_
 
 Fake Device Registry Configuration File
 ---------------------------------------
@@ -85,9 +85,8 @@ about a point.  Please note that there is nothing in the driver that will enforc
         SampleBool1,On / Off,on/off,FALSE,TRUE,boolean,Status indicator of cooling stage 1
         SampleWritableBool1,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
 
-A sample fake registry configuration file can be found
-`here <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.csv>`_
-or in the volttron-lib-fake-driver repository as `fake.csv`.
+A sample fake registry configuration file can be found in the volttron-lib-fake-driver repository as
+`fake.csv <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.csv>`_.
 
 
 .. _Fake-Driver-Install:
@@ -105,8 +104,8 @@ configuration and registry configuration files to the Platform Driver's :ref:`co
     mkdir myconfig
 
 - Save copies, in myconfig, of the example
-  :ref:`device config file <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.config>`
-  and :ref:`registry file <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.csv>`
+  `device config file <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.config>`_
+  and `registry file <https://raw.githubusercontent.com/eclipse-volttron/volttron-lib-fake-driver/main/fake.csv>`_
   from the volttron-lib-fake-driver repository.
 
 - Edit the fake.config and fake.csv files, if desired.
