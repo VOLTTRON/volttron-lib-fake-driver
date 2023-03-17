@@ -117,11 +117,11 @@ configuration and registry configuration files to the Platform Driver's :ref:`co
     vctl config store platform.driver devices/campus/building/fake1 myconfig/fake.config
     vctl config store platform.driver registry_configs/fake.csv myconfig/fake.csv --csv
 
-- Use the scripts/install-agent.py script to install the Platform Driver agent:
+- If it is not already installed, install the Platform Driver agent:
 
 .. code-block:: bash
 
-    python scripts/install-agent.py -s services/core/PlatformDriverAgent -i platform.driver -t driver
+    vctl install volttron-platform-driver --vip-identity platform.driver --tag driver
 
 - If you have a :ref:`Listener Agent<Listener-Agent>` already installed, you should start seeing data being published to
-  the bus.
+  the bus as soon as the driver agent is started.
