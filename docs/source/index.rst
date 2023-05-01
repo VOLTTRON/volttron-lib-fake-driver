@@ -6,7 +6,7 @@ Fake Driver
 
 The FakeDriver is included as a way to quickly see data published to the message bus in a format
 that mimics what a true Driver would produce.  This is an extremely simple implementation of the
-:ref:`VOLTTRON driver framework <Driver-Framework>`.
+:ref:`VOLTTRON Driver Framework <Driver-Framework>`.
 
 
 Fake Device Driver Configuration
@@ -94,7 +94,7 @@ A sample fake registry configuration file can be found in the volttron-lib-fake-
 Installation
 ============
 
-Installing a Fake driver in the :ref:`Platform Driver Agent <Platform-Driver>` requires adding copies of the device
+Installing a Fake driver in the :ref:`Platform Driver Agent <Platform-Driver-Agent>` requires adding copies of the device
 configuration and registry configuration files to the Platform Driver's :ref:`configuration store <Configuration-Store>`
 
 - Create a local directory for editing config files (if one doesn't already exist):
@@ -122,6 +122,12 @@ configuration and registry configuration files to the Platform Driver's :ref:`co
 .. code-block:: bash
 
     vctl install volttron-platform-driver --vip-identity platform.driver --tag driver
+
+- Install the volttron fake driver library:
+
+.. code-block:: bash
+
+    pip install volttron-lib-fake-driver
 
 - If you have a :ref:`Listener Agent<Listener-Agent>` already installed, you should start seeing data being published to
   the bus as soon as the driver agent is started.
