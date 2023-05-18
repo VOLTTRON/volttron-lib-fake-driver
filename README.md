@@ -1,5 +1,7 @@
 # volttron-lib-fake-driver
 
+![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)
+![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)
 ![Passing?](https://github.com/eclipse-volttron/volttron-lib-fake-driver/actions/workflows/run-tests.yml/badge.svg)
 [![pypi version](https://img.shields.io/pypi/v/volttron-lib-fake-driver.svg)](https://pypi.org/project/volttron-lib-fake-driver/)
 
@@ -34,86 +36,86 @@ Information on how to install of the VOLTTRON platform can be found
 
 2. Install the volttron fake driver library:
 
-```shell
-pip install volttron-lib-fake-driver
-```
+   ```shell
+   pip install volttron-lib-fake-driver
+   ```
 
 3. Store device and registry files for the Fake device to the Platform Driver configuration store:
 
-* Create a config directory and navigate to it:
+   * Create a config directory and navigate to it:
 
-```shell
-mkdir config
-cd config
-```
+      ```shell
+      mkdir config
+      cd config
+      ```
 
-* Navigate to the config directory and create a file called `fake.config` and add the following JSON to it:
+   * Navigate to the config directory and create a file called `fake.config` and add the following JSON to it:
 
-```json
-{
-    "driver_config": {},
-    "registry_config": "config://fake.csv",
-    "interval": 5,
-    "timezone": "US/Pacific",
-    "heart_beat_point": "Heartbeat",
-    "driver_type": "fake",
-    "publish_breadth_first_all": false,
-    "publish_depth_first": false,
-    "publish_breadth_first": false
-    }
-```
+      ```json
+      {
+          "driver_config": {},
+          "registry_config": "config://fake.csv",
+          "interval": 5,
+          "timezone": "US/Pacific",
+          "heart_beat_point": "Heartbeat",
+          "driver_type": "fake",
+          "publish_breadth_first_all": false,
+          "publish_depth_first": false,
+          "publish_breadth_first": false
+          }
+      ```
 
-* Create another file called `fake.csv` and add the following contents to it:
+   * Create another file called `fake.csv` and add the following contents to it:
 
-```csv
-Point Name,Volttron Point Name,Units,Units Details,Writable,Starting Value,Type,Notes
-EKG,EKG,waveform,waveform,TRUE,sin,float,Sine wave for baseline output
-Heartbeat,Heartbeat,On/Off,On/Off,TRUE,0,boolean,Point for heartbeat toggle
-OutsideAirTemperature1,OutsideAirTemperature1,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
-SampleWritableFloat1,SampleWritableFloat1,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
-SampleLong1,SampleLong1,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
-SampleWritableShort1,SampleWritableShort1,%,0.00 to 100.00 (20 default),TRUE,20,int,Minimum damper position during the standard mode
-SampleBool1,SampleBool1,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of cooling stage 1
-SampleWritableBool1,SampleWritableBool1,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
-OutsideAirTemperature2,OutsideAirTemperature2,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
-SampleWritableFloat2,SampleWritableFloat2,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
-SampleLong2,SampleLong2,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
-SampleWritableShort2,SampleWritableShort2,%,0.00 to 100.00 (20 default),TRUE,20,int,Minimum damper position during the standard mode
-SampleBool2,SampleBool2,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of cooling stage 1
-SampleWritableBool2,SampleWritableBool2,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
-OutsideAirTemperature3,OutsideAirTemperature3,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
-SampleWritableFloat3,SampleWritableFloat3,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
-SampleLong3,SampleLong3,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
-SampleWritableShort3,SampleWritableShort3,%,0.00 to 100.00 (20 default),TRUE,20,int,Minimum damper position during the standard mode
-SampleBool3,SampleBool3,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of cooling stage 1
-SampleWritableBool3,SampleWritableBool3,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
-HPWH_Phy0_PowerState,PowerState,1/0,1/0,TRUE,0,int,Power on off status
-ERWH_Phy0_ValveState,ValveState,1/0,1/0,TRUE,0,int,power on off status
-EKG_Sin,EKG_Sin,1-0,SIN Wave,TRUE,sin,float,SIN wave
-EKG_Cos,EKG_Cos,1-0,COS Wave,TRUE,sin,float,COS wave
-```
+      ```csv
+      Point Name,Volttron Point Name,Units,Units Details,Writable,Starting Value,Type,Notes
+      EKG,EKG,waveform,waveform,TRUE,sin,float,Sine wave for baseline output
+      Heartbeat,Heartbeat,On/Off,On/Off,TRUE,0,boolean,Point for heartbeat toggle
+      OutsideAirTemperature1,OutsideAirTemperature1,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
+      SampleWritableFloat1,SampleWritableFloat1,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
+      SampleLong1,SampleLong1,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
+      SampleWritableShort1,SampleWritableShort1,%,0.00 to 100.00 (20 default),TRUE,20,int,Minimum damper position during the standard mode
+      SampleBool1,SampleBool1,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of cooling stage 1
+      SampleWritableBool1,SampleWritableBool1,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
+      OutsideAirTemperature2,OutsideAirTemperature2,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
+      SampleWritableFloat2,SampleWritableFloat2,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
+      SampleLong2,SampleLong2,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
+      SampleWritableShort2,SampleWritableShort2,%,0.00 to 100.00 (20 default),TRUE,20,int,Minimum damper position during the standard mode
+      SampleBool2,SampleBool2,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of cooling stage 1
+      SampleWritableBool2,SampleWritableBool2,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
+      OutsideAirTemperature3,OutsideAirTemperature3,F,-100 to 300,FALSE,50,float,CO2 Reading 0.00-2000.0 ppm
+      SampleWritableFloat3,SampleWritableFloat3,PPM,1000.00 (default),TRUE,10,float,Setpoint to enable demand control ventilation
+      SampleLong3,SampleLong3,Enumeration,1 through 13,FALSE,50,int,Status indicator of service switch
+      SampleWritableShort3,SampleWritableShort3,%,0.00 to 100.00 (20 default),TRUE,20,int,Minimum damper position during the standard mode
+      SampleBool3,SampleBool3,On / Off,on/off,FALSE,TRUE,boolean,Status indidcator of cooling stage 1
+      SampleWritableBool3,SampleWritableBool3,On / Off,on/off,TRUE,TRUE,boolean,Status indicator
+      HPWH_Phy0_PowerState,PowerState,1/0,1/0,TRUE,0,int,Power on off status
+      ERWH_Phy0_ValveState,ValveState,1/0,1/0,TRUE,0,int,power on off status
+      EKG_Sin,EKG_Sin,1-0,SIN Wave,TRUE,sin,float,SIN wave
+      EKG_Cos,EKG_Cos,1-0,COS Wave,TRUE,sin,float,COS wave
+      ```
 
-* Add fake.csv and fake.config to the configuration store:
+   * Add fake.csv and fake.config to the configuration store:
 
-```
-vctl config store platform.driver devices/campus/building/fake fake.config
-vctl config store platform.driver fake.csv fake.csv --csv
-```
+      ```
+      vctl config store platform.driver devices/campus/building/fake fake.config
+      vctl config store platform.driver fake.csv fake.csv --csv
+      ```
 
 4. Observe Data
 
-To see data being published to the bus, install a [Listener Agent](https://pypi.org/project/volttron-listener/):
-
-```
-vctl install volttron-listener --start
-```
-
-Once installed, you should see the data being published by viewing the Volttron logs file that was created in step 2.
-To watch the logs, open a separate terminal and run the following command:
-
-```
-tail -f <path to folder containing volttron.log>/volttron.log
-```
+   To see data being published to the bus, install a [Listener Agent](https://pypi.org/project/volttron-listener/):
+   
+   ```
+   vctl install volttron-listener --start
+   ```
+   
+   Once installed, you should see the data being published by viewing the Volttron logs file that was created in step 2.
+   To watch the logs, open a separate terminal and run the following command:
+   
+   ```
+   tail -f <path to folder containing volttron.log>/volttron.log
+   ```
 
 # Development
 
