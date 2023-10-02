@@ -1,80 +1,53 @@
 # volttron-lib-fake-driver
 
-![Passing?](https://github.com/VOLTTRON/volttron-lib-fake-driver/actions/workflows/run-tests.yml/badge.svg)
+![Passing?](https://github.com/eclipse-volttron/volttron-lib-fake-driver/actions/workflows/run-tests.yml/badge.svg)
 [![pypi version](https://img.shields.io/pypi/v/volttron-lib-fake-driver.svg)](https://pypi.org/project/volttron-lib-fake-driver/)
 
-The FakeDriver is a way to quickly see data published to the message bus in a format that mimics what a true Driver would produce. This is an extremely simple implementation of the [VOLTTRON driver framework](https://volttron.readthedocs.io/en/develop/agent-framework/driver-framework/drivers-overview.html#driver-framework). This driver does not connect to any actual device and instead produces random and or pre-configured values.
+The FakeDriver is a way to quickly see data published to the message bus in a format that mimics
+what a true Driver would produce. This is an extremely simple implementation of the 
+[VOLTTRON Driver Framework](https://volttron.readthedocs.io/en/develop/agent-framework/driver-framework/drivers-overview.html#driver-framework). 
+This driver does not connect to any actual device and instead produces random and or pre-configured values.
 
-# Prerequisites
+# Requires
 
-* Python 3.8
+* python >= 3.10
+* volttron >= 10.0
+* volttron-lib-base-driver
 
-## Python
 
-<details>
-<summary>To install Python 3.8, we recommend using <a href="https://github.com/pyenv/pyenv"><code>pyenv</code></a>.</summary>
+# Documentation
+More detailed documentation can be found on [ReadTheDocs](https://volttron.readthedocs.io/en/modular/). The RST source
+of the documentation for this component is located in the "docs" directory of this repository.
 
-```bash
-# install pyenv
-git clone https://github.com/pyenv/pyenv ~/.pyenv
-
-# setup pyenv (you should also put these three lines in .bashrc or similar)
-export PATH="${HOME}/.pyenv/bin:${PATH}"
-export PYENV_ROOT="${HOME}/.pyenv"
-eval "$(pyenv init -)"
-
-# install Python 3.8
-pyenv install 3.8.10
-
-# make it available globally
-pyenv global system 3.8.10
-```
-</details>
 
 # Installation
 
-1. Create and activate a virtual environment.
+Before installing, VOLTTRON should be installed and running.  Its virtual environment should be active.
+Information on how to install of the VOLTTRON platform can be found
+[here](https://github.com/eclipse-volttron/volttron-core).
 
-```shell
-python -m venv env
-source env/bin/activate
-```
+1. If it is not already, install the VOLTTRON Platform Driver Agent:
 
-2. Install volttron and start the platform.
+    ```shell
+    vctl install volttron-platform-driver --vip-identity platform.driver --start
+    ```
 
-```shell
-pip install volttron
-
-# Start platform with output going to volttron.log
-volttron -vv -l volttron.log &
-```
-
-3. Install the volttron platform driver:
-
-```shell
-vctl install volttron-platform-driver --vip-identity platform.driver --start
-```
-
-4. Install the volttron fake driver library.
-
- You have two options. You can install this library using the version on PyPi:
+2. Install the volttron fake driver library:
 
 ```shell
 pip install volttron-lib-fake-driver
 ```
 
-5. Install a Fake Driver onto the Platform Driver.
+3. Store device and registry files for the Fake device to the Platform Driver configuration store:
 
-Installing a Fake driver in the Platform Driver Agent requires adding copies of the device configuration and registry configuration files to the Platform Driver’s configuration store
-
-Create a config directory and navigate to it:
+* Create a config directory and navigate to it:
 
 ```shell
 mkdir config
 cd config
 ```
 
-Navigate to the config directory and create a file called `fake.config` and add the following JSON to it:
+* Navigate to the config directory and create a file called `fake.config` and add the following JSON to it:
 
 ```json
 {
@@ -90,7 +63,7 @@ Navigate to the config directory and create a file called `fake.config` and add 
     }
 ```
 
-Create another file called `fake.csv` and add the following contents to it:
+* Create another file called `fake.csv` and add the following contents to it:
 
 ```csv
 Point Name,Volttron Point Name,Units,Units Details,Writable,Starting Value,Type,Notes
@@ -120,14 +93,14 @@ EKG_Sin,EKG_Sin,1-0,SIN Wave,TRUE,sin,float,SIN wave
 EKG_Cos,EKG_Cos,1-0,COS Wave,TRUE,sin,float,COS wave
 ```
 
-Add fake.csv and fake.config to the configuration store:
+* Add fake.csv and fake.config to the configuration store:
 
 ```
 vctl config store platform.driver devices/campus/building/fake fake.config
 vctl config store platform.driver fake.csv fake.csv --csv
 ```
 
-6. Observe Data
+4. Observe Data
 
 To see data being published to the bus, install a [Listener Agent](https://pypi.org/project/volttron-listener/):
 
