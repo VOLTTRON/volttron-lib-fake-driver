@@ -26,6 +26,7 @@ import datetime
 import logging
 import math
 import random
+
 from math import pi
 
 from volttron.driver.base.interfaces import (BaseInterface, BaseRegister, BasicRevert)
@@ -91,12 +92,11 @@ class Fake(BasicRevert, BaseInterface):
     def __init__(self, **kwargs):
         super(Fake, self).__init__(**kwargs)
 
-    def configure(self, config_dict, registry_config_str):
-        self.parse_config(registry_config_str)
+    def configure(self, config_dict):
+        pass
 
-    def get_point(self, point_name):
+    def get_point(self, point_name, **kwargs):
         register = self.get_register_by_name(point_name)
-
         return register.value
 
     def _set_point(self, point_name, value):
@@ -116,23 +116,24 @@ class Fake(BasicRevert, BaseInterface):
 
         return result
 
-    def parse_config(self, configDict):
-        if configDict is None:
-            return
+    def create_registers(self, registry_config: list[dict]) -> list[BaseRegister]:
+        if registry_config is None:
+            return []
 
-        for regDef in configDict:
+        registers = []
+        for register_definition in registry_config:
             # Skip lines that have no address yet.
-            if not regDef['Point Name']:
+            if not register_definition['Point Name']:
                 continue
 
-            read_only = regDef['Writable'].lower() != 'true'
-            point_name = regDef['Volttron Point Name']
-            description = regDef.get('Notes', '')
-            units = regDef['Units']
-            default_value = regDef.get("Starting Value", 'sin').strip()
+            read_only = register_definition['Writable'].lower() != 'true'
+            point_name = register_definition['Volttron Point Name']
+            description = register_definition.get('Notes', '')
+            units = register_definition['Units']
+            default_value = register_definition.get("Starting Value", 'sin').strip()
             if not default_value:
                 default_value = None
-            type_name = regDef.get("Type", 'string')
+            type_name = register_definition.get("Type", 'string')
             reg_type = type_mapping.get(type_name, str)
 
             register_type = FakeRegister if not point_name.startswith('EKG') else EKGregister
@@ -147,4 +148,5 @@ class Fake(BasicRevert, BaseInterface):
             if default_value is not None:
                 self.set_default(point_name, register.value)
 
-            self.insert_register(register)
+            registers.append(register)
+        return registers
