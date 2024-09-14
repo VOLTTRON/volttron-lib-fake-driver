@@ -28,8 +28,10 @@ import math
 import random
 
 from math import pi
+from pydantic import Field
 
 from volttron.driver.base.interfaces import (BaseInterface, BaseRegister, BasicRevert)
+from volttron.driver.base.config import PointConfig
 
 _log = logging.getLogger(__name__)
 type_mapping = {
@@ -42,11 +44,17 @@ type_mapping = {
 }
 
 
+class FakePointConfig(PointConfig):
+    # TODO: string starting_value.
+    starting_value: int | float | bool | str = Field(default='sin', alias='Starting Value')
+    type: str = Field(default='string', alias='Type')
+
+
 class FakeRegister(BaseRegister):
 
-    def __init__(self, read_only, pointName, units, reg_type, default_value=None, description=''):
+    def __init__(self, read_only, point_name, units, reg_type, default_value=None, description=''):
         #     register_type, read_only, pointName, units, description = ''):
-        super(FakeRegister, self).__init__("byte", read_only, pointName, units, description='')
+        super(FakeRegister, self).__init__("byte", read_only, point_name, units, description='')
         self.reg_type = reg_type
 
         if default_value is None:
@@ -60,8 +68,8 @@ class FakeRegister(BaseRegister):
 
 class EKGregister(BaseRegister):
 
-    def __init__(self, read_only, pointName, units, reg_type, default_value=None, description=''):
-        super(EKGregister, self).__init__("byte", read_only, pointName, units, description='')
+    def __init__(self, read_only, point_name, units, reg_type, default_value=None, description=''):
+        super(EKGregister, self).__init__("byte", read_only, point_name, units, description='')
         self._value = 1
 
         math_functions = ('acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'sin',
@@ -88,6 +96,8 @@ class EKGregister(BaseRegister):
 
 
 class Fake(BasicRevert, BaseInterface):
+
+    config_class = FakePointConfig
 
     def __init__(self, **kwargs):
         super(Fake, self).__init__(**kwargs)
@@ -116,37 +126,36 @@ class Fake(BasicRevert, BaseInterface):
 
         return result
 
-    def create_registers(self, registry_config: list[dict]) -> list[BaseRegister]:
+    def create_registers(self, registry_config: list[FakePointConfig]) -> list[BaseRegister]:
         if registry_config is None:
             return []
 
         registers = []
         for register_definition in registry_config:
             # Skip lines that have no address yet.
-            if not register_definition['Point Name']:
+            if not register_definition.volttron_point_name:
                 continue
 
-            read_only = register_definition['Writable'].lower() != 'true'
-            point_name = register_definition['Volttron Point Name']
-            description = register_definition.get('Notes', '')
-            units = register_definition['Units']
-            default_value = register_definition.get("Starting Value", 'sin').strip()
+            read_only = register_definition.writable is not True
+            description = register_definition.notes
+            units = register_definition.units
+            default_value = register_definition.starting_value.strip()
             if not default_value:
                 default_value = None
-            type_name = register_definition.get("Type", 'string')
-            reg_type = type_mapping.get(type_name, str)
+            reg_type = type_mapping.get(register_definition.type, str)
 
-            register_type = FakeRegister if not point_name.startswith('EKG') else EKGregister
+            register_type = FakeRegister if not register_definition.volttron_point_name.startswith(
+                'EKG') else EKGregister
 
             register = register_type(read_only,
-                                     point_name,
+                                     register_definition.volttron_point_name,
                                      units,
                                      reg_type,
                                      default_value=default_value,
                                      description=description)
 
             if default_value is not None:
-                self.set_default(point_name, register.value)
+                self.set_default(register_definition.volttron_point_name, register.value)
 
             registers.append(register)
         return registers
