@@ -109,6 +109,9 @@ class Fake(BasicRevert, BaseInterface):
         register = self.get_register_by_name(point_name)
         return register.value
 
+    def get_multiple_points(self, topics: list[str], **kwargs) -> (dict, dict):
+        return super(Fake, self).get_multiple_points(topics, **kwargs)
+
     def _set_point(self, point_name, value):
         register = self.get_register_by_name(point_name)
         if register.read_only:
