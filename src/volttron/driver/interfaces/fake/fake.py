@@ -31,7 +31,7 @@ from math import pi
 from pydantic import Field
 
 from volttron.driver.base.interfaces import (BaseInterface, BaseRegister, BasicRevert)
-from volttron.driver.base.config import PointConfig
+from volttron.driver.base.config import PointConfig, RemoteConfig
 
 _log = logging.getLogger(__name__)
 type_mapping = {
@@ -101,9 +101,10 @@ class Fake(BasicRevert, BaseInterface):
 
     def __init__(self, **kwargs):
         super(Fake, self).__init__(**kwargs)
+        self.remote_id = None
 
-    def configure(self, config_dict):
-        pass
+    def configure(self, config):
+        self.remote_id = config.remote_id if hasattr(config, 'remote_id') else None
 
     def get_point(self, point_name, **kwargs):
         register = self.get_register_by_name(point_name)
@@ -162,3 +163,13 @@ class Fake(BasicRevert, BaseInterface):
 
             registers.append(register)
         return registers
+
+    @classmethod
+    def unique_remote_id(cls, config_name: str, config: RemoteConfig) -> tuple:
+        """Unique Remote ID
+        Subclasses should use this class method to return a hashable identifier which uniquely identifies a single
+         remote -- e.g., if multiple remotes may exist at a single IP address, but on different ports,
+         the unique ID might be the tuple: (ip_address, port).
+        The base class returns the name of the device configuration file, requiring a separate DriverAgent for each.
+        """
+        return (config_name,) if not hasattr(config, 'remote_id') else (config.remote_id,)
