@@ -130,39 +130,32 @@ class Fake(BasicRevert, BaseInterface):
 
         return result
 
-    def create_registers(self, registry_config: list[FakePointConfig]) -> list[BaseRegister]:
-        if registry_config is None:
-            return []
+    def create_register(self, register_definition: FakePointConfig) -> BaseRegister | None:
+        # Skip lines that have no address yet.
+        if not register_definition.volttron_point_name:
+            return None
 
-        registers = []
-        for register_definition in registry_config:
-            # Skip lines that have no address yet.
-            if not register_definition.volttron_point_name:
-                continue
+        read_only = register_definition.writable is not True
+        description = register_definition.notes
+        units = register_definition.units
+        default_value = register_definition.starting_value.strip()
+        if not default_value:
+            default_value = None
+        reg_type = type_mapping.get(register_definition.type, str)
 
-            read_only = register_definition.writable is not True
-            description = register_definition.notes
-            units = register_definition.units
-            default_value = register_definition.starting_value.strip()
-            if not default_value:
-                default_value = None
-            reg_type = type_mapping.get(register_definition.type, str)
+        register_type = FakeRegister if not register_definition.volttron_point_name.startswith(
+            'EKG') else EKGregister
 
-            register_type = FakeRegister if not register_definition.volttron_point_name.startswith(
-                'EKG') else EKGregister
+        register = register_type(read_only,
+                                 register_definition.volttron_point_name,
+                                 units,
+                                 reg_type,
+                                 default_value=default_value,
+                                 description=description)
 
-            register = register_type(read_only,
-                                     register_definition.volttron_point_name,
-                                     units,
-                                     reg_type,
-                                     default_value=default_value,
-                                     description=description)
-
-            if default_value is not None:
-                self.set_default(register_definition.volttron_point_name, register.value)
-
-            registers.append(register)
-        return registers
+        if default_value is not None:
+            self.set_default(register_definition.volttron_point_name, register.value)
+        return register
 
     @classmethod
     def unique_remote_id(cls, config_name: str, config: RemoteConfig) -> tuple:
