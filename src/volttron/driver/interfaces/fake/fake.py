@@ -43,6 +43,9 @@ type_mapping = {
     "boolean": bool
 }
 
+class FakeRemoteConfig(RemoteConfig):
+    remote_id: str | None = None
+
 
 class FakePointConfig(PointConfig):
     # TODO: string starting_value.
@@ -97,24 +100,22 @@ class EKGregister(BaseRegister):
 
 class Fake(BasicRevert, BaseInterface):
 
-    config_class = FakePointConfig
+    REGISTER_CONFIG_CLASS = FakePointConfig
+    INTERFACE_CONFIG_CLASS = FakeRemoteConfig
 
-    def __init__(self, **kwargs):
-        super(Fake, self).__init__(**kwargs)
-        self.remote_id = None
-
-    def configure(self, config):
-        self.remote_id = config.remote_id if hasattr(config, 'remote_id') else None
+    def __init__(self, config: FakeRemoteConfig, **kwargs):
+        BasicRevert.__init__(self, **kwargs)
+        BaseInterface.__init__(self, config, **kwargs)
 
     def get_point(self, point_name, **kwargs):
-        register = self.get_register_by_name(point_name)
+        register: FakeRegister = self.get_register_by_name(point_name)
         return register.value
 
     def get_multiple_points(self, topics: list[str], **kwargs) -> (dict, dict):
         return super(Fake, self).get_multiple_points(topics, **kwargs)
 
     def _set_point(self, point_name, value):
-        register = self.get_register_by_name(point_name)
+        register: FakeRegister = self.get_register_by_name(point_name)
         if register.read_only:
             raise RuntimeError("Trying to write to a point configured read only: " + point_name)
 
@@ -130,11 +131,7 @@ class Fake(BasicRevert, BaseInterface):
 
         return result
 
-    def create_register(self, register_definition: FakePointConfig) -> BaseRegister | None:
-        # Skip lines that have no address yet.
-        if not register_definition.volttron_point_name:
-            return None
-
+    def create_register(self, register_definition: FakePointConfig) -> FakeRegister:
         read_only = register_definition.writable is not True
         description = register_definition.notes
         units = register_definition.units
