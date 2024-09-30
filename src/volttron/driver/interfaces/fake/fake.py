@@ -27,6 +27,7 @@ import logging
 import math
 import random
 
+from collections.abc import KeysView
 from math import pi
 from pydantic import Field
 
@@ -111,8 +112,8 @@ class Fake(BasicRevert, BaseInterface):
         register: FakeRegister = self.get_register_by_name(point_name)
         return register.value
 
-    def get_multiple_points(self, topics: list[str], **kwargs) -> (dict, dict):
-        return super(Fake, self).get_multiple_points(topics, **kwargs)
+    def _get_multiple_points(self, topics: KeysView[str], **kwargs) -> (dict, dict):
+        return BaseInterface.get_multiple_points(self, topics, **kwargs)
 
     def _set_point(self, point_name, value):
         register: FakeRegister = self.get_register_by_name(point_name)
@@ -121,15 +122,6 @@ class Fake(BasicRevert, BaseInterface):
 
         register.value = register.reg_type(value)
         return register.value
-
-    def _scrape_all(self):
-        result = {}
-        read_registers = self.get_registers_by_type("byte", True)
-        write_registers = self.get_registers_by_type("byte", False)
-        for register in read_registers + write_registers:
-            result[register.point_name] = register.value
-
-        return result
 
     def create_register(self, register_definition: FakePointConfig) -> FakeRegister:
         read_only = register_definition.writable is not True
