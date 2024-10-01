@@ -105,8 +105,8 @@ class Fake(BasicRevert, BaseInterface):
     INTERFACE_CONFIG_CLASS = FakeRemoteConfig
 
     def __init__(self, config: FakeRemoteConfig, *args, **kwargs):
-        BasicRevert.__init__(self, *args, **kwargs)
-        BaseInterface.__init__(self, config, **kwargs)
+        BasicRevert.__init__(self, **kwargs)
+        BaseInterface.__init__(self, config, *args, **kwargs)
 
     def get_point(self, point_name, **kwargs):
         register: FakeRegister = self.get_register_by_name(point_name)
@@ -154,4 +154,4 @@ class Fake(BasicRevert, BaseInterface):
          the unique ID might be the tuple: (ip_address, port).
         The base class returns the name of the device configuration file, requiring a separate DriverAgent for each.
         """
-        return (config_name,) if not hasattr(config, 'remote_id') else (config.remote_id,)
+        return (config_name,) if config.remote_id is None else (config.remote_id,)
