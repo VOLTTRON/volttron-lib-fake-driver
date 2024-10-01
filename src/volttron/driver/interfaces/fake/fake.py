@@ -104,8 +104,8 @@ class Fake(BasicRevert, BaseInterface):
     REGISTER_CONFIG_CLASS = FakePointConfig
     INTERFACE_CONFIG_CLASS = FakeRemoteConfig
 
-    def __init__(self, config: FakeRemoteConfig, **kwargs):
-        BasicRevert.__init__(self, **kwargs)
+    def __init__(self, config: FakeRemoteConfig, *args, **kwargs):
+        BasicRevert.__init__(self, *args, **kwargs)
         BaseInterface.__init__(self, config, **kwargs)
 
     def get_point(self, point_name, **kwargs):
