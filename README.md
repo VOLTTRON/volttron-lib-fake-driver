@@ -36,7 +36,7 @@ Information on how to install of the VOLTTRON platform can be found
 2. Install the volttron fake driver library:
 
    ```shell
-   poetry add volttron-lib-fake-driver
+   poetry add --directory $VOLTTRON_HOME volttron-lib-fake-driver
    ```
 
 3. Create configurations for a fake device:
