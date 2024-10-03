@@ -96,7 +96,7 @@ Information on how to install of the VOLTTRON platform can be found
 
 4. Observe Data
 
-   To see data being published to the bus, install a [Listener Agent](https://pypi.org/project/volttron-listener/):
+   To see data being published to the bus, install a [Listener Agent](https://github.com/eclipse-volttron/volttron-listener):
    
    ```
    vctl install volttron-listener --start
