@@ -1,13 +1,16 @@
 # VOLTTRON Fake Driver Interface
 
 ![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)
-![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)
 ![Passing?](https://github.com/eclipse-volttron/volttron-lib-fake-driver/actions/workflows/run-tests.yml/badge.svg)
 [![pypi version](https://img.shields.io/pypi/v/volttron-lib-fake-driver.svg)](https://pypi.org/project/volttron-lib-fake-driver/)
 
 The FakeDriver is a way to quickly see data published to the message bus in a format that mimics
 what a true Driver would produce. This is an extremely simple implementation of the 
 [VOLTTRON Driver Framework](https://eclipse-volttron.readthedocs.io/en/latest/external-docs/volttron-platform-driver/docs/source/index.html). 
+This driver does not connect to any actual device and instead produces random and or pre-configured values.
+The FakeDriver is a way to quickly see data published to the message bus in a format that mimics
+what a true Driver would produce. This is an extremely simple implementation of the 
+[VOLTTRON Driver Framework](https://volttron.readthedocs.io/en/develop/agent-framework/driver-framework/drivers-overview.html#driver-framework). 
 This driver does not connect to any actual device and instead produces random and or pre-configured values.
 
 # Requires
@@ -18,8 +21,8 @@ This driver does not connect to any actual device and instead produces random an
 
 
 # Documentation
-More detailed documentation can be found on [ReadTheDocs](https://eclipse-volttron.readthedocs.io/en/latest/external-docs/volttron-platform-driver/docs/source/index.html).
-The RST source of the documentation for this component is located in the "docs" directory of this repository.
+More detailed documentation can be found on [ReadTheDocs](https://volttron.readthedocs.io/en/modular/). The RST source
+of the documentation for this component is located in the "docs" directory of this repository.
 
 
 # Installation
