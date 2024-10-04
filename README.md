@@ -9,12 +9,15 @@ what a true Driver would produce. This is an extremely simple implementation of 
 [VOLTTRON Driver Framework](https://eclipse-volttron.readthedocs.io/en/latest/external-docs/volttron-platform-driver/index.html). 
 This driver does not connect to any actual device and instead produces random and or pre-configured values.
 
-# Requires
+## Pre-requisite
 
-* python >= 3.10
-* volttron-core >= 2.0.0rc0
+VOLTTRON (>=11.0.0rc0) should be installed and running.  Its virtual environment should be active.
+Information on how to install of the VOLTTRON platform can be found
+[here](https://github.com/eclipse-volttron/volttron-core/tree/v10)
+
+## Automatically installed dependencies
+
 * volttron-lib-base-driver >= 2.0.0rc0
-
 
 # Documentation
 More detailed documentation can be found on [ReadTheDocs](https://eclipse-volttron.readthedocs.io/en/latest/external-docs/volttron-lib-fake-driver_docs_root/docs/source/index.html#fake-driver). The RST source
@@ -22,10 +25,6 @@ of the documentation for this component is located in the "docs" directory of th
 
 
 # Installation
-
-Before installing, VOLTTRON should be installed and running.  Its virtual environment should be active.
-Information on how to install of the VOLTTRON platform can be found
-[here](https://github.com/eclipse-volttron/volttron-core).
 
 1. If it is not already, install the VOLTTRON Platform Driver Agent:
 
